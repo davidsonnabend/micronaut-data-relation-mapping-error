@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: '1'
+      author: 'ds'
+      changes:
+        - createTable:
+            tableName: foo
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: version
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                  defaultValueNumeric: 0
+              - column:
+                  name: another_bar_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+              - column:
+                  name: some_bar_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+  - changeSet:
+      id: '2'
+      author: 'ds'
+      changes:
+        - createTable:
+            tableName: bar
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: version
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                  defaultValueNumeric: 0
+  - changeSet:
+      id: '3'
+      author: 'ds'
+      changes:
+        - addForeignKeyConstraint:
+            constraintName: FK_foo_some_bar
+            baseColumnNames: some_bar_id
+            baseTableName: foo
+            referencedColumnNames: id
+            referencedTableName: bar
+  - changeSet:
+      id: '4'
+      author: 'ds'
+      changes:
+        - addForeignKeyConstraint:
+            constraintName: FK_foo_another_bar
+            baseColumnNames: another_bar_id
+            baseTableName: foo
+            referencedColumnNames: id
+            referencedTableName: bar
